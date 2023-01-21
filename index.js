@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(cors());
 
 app.get("/", (req, res) => {
-  res.send("Welocme Home");
+  res.send("Welocme To OUR Home Page");
 });
 
 //Signup User
@@ -25,11 +25,11 @@ app.post("/signup", async (req, res) => {
   const isUser = await UserModel.findOne({ email });
   // res.send(req.body)
   if (isUser) {
-    res.send({ msg: "Users already exists" });
+    res.send({ msg: "Users already exists, please Use different ID Password" });
   } else {
     bcrypt.hash(password, 4, async function (err, hash) {
       if (err) {
-        res.send({ msg: "Something went wrong here " });
+        res.send({ msg: "Something went wrong! Plese Try again " });
       }
       const new_user = new UserModel({ username, email, password: hash });
       try {
@@ -54,7 +54,7 @@ app.post("/login", async (req, res) => {
     }
     if (result) {
       const token = jwt.sign({ user_id }, "secret123");
-      res.send({ msg: "login successfull", token });
+      res.send({ msg: "login successfull Now You can enjoy your personal work space", token });
     } else {
       res.send({ msg: "login failed,try again" });
     }
